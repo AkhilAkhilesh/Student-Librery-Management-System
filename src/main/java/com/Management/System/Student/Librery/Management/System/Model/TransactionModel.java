@@ -1,10 +1,13 @@
 package com.Management.System.Student.Librery.Management.System.Model;
 
 import com.Management.System.Student.Librery.Management.System.enums.transactiontype;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.mapping.Value;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,7 +21,7 @@ public class TransactionModel {
 
     @Column(name = "TransactionDate")
     @CreationTimestamp
-    private Date transactiondate;
+    private LocalDate transactiondate;
 
     @Column(name = "DueDate")
     private String duedate;
@@ -27,13 +30,16 @@ public class TransactionModel {
     @Enumerated(value = EnumType.STRING)
     private transactiontype transactiontype;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "Card", referencedColumnName = "CardId")
     private CardModel card;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "Books", referencedColumnName = "BookId")
     private BookModel book;
+
 
     public int getId() {
         return id;
@@ -75,11 +81,11 @@ public class TransactionModel {
         this.duedate = duedate;
     }
 
-    public Date getTransactiondate() {
+    public LocalDate getTransactiondate() {
         return transactiondate;
     }
 
-    public void setTransactiondate(Date transactiondate) {
+    public void setTransactiondate(LocalDate transactiondate) {
         this.transactiondate = transactiondate;
     }
 }

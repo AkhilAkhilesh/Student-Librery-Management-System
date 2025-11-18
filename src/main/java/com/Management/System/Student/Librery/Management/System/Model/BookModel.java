@@ -2,6 +2,8 @@ package com.Management.System.Student.Librery.Management.System.Model;
 
 import com.Management.System.Student.Librery.Management.System.enums.bookcategory;
 import com.Management.System.Student.Librery.Management.System.enums.bookavailability;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -35,10 +37,12 @@ public class BookModel {
     @Enumerated(value = EnumType.STRING)
     private bookcategory category;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "Card_Id", referencedColumnName = "CardId")
     private CardModel card;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "book")
     private List<TransactionModel> transaction;
 

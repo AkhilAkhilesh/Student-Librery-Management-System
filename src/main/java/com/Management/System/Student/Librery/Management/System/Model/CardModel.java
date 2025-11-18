@@ -2,6 +2,9 @@ package com.Management.System.Student.Librery.Management.System.Model;
 
 
 import com.Management.System.Student.Librery.Management.System.enums.cardstatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,21 +34,34 @@ public class CardModel {
     @UpdateTimestamp
     private Date updateddate;
 
+    @JsonBackReference
     @OneToOne
+    @JoinColumn
     private StudentModel stu;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "card")
-    private List<BookModel>  books;
+    private List<BookModel>  book;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "card")
     private List<TransactionModel> transactions;
 
-    public List<BookModel> getBooks() {
-        return books;
+    public CardModel(CardModel cr) {
+        this.id = cr.id;
+        this.stu = cr.stu;
+        this.updateddate = cr.updateddate;
+        this.createddate = cr.createddate;
+        this.expiredate = cr.expiredate;
+        this.cardstatus = cr.cardstatus;
     }
 
-    public void setBooks(List<BookModel> books) {
-        this.books = books;
+    public List<BookModel> getBook() {
+        return book;
+    }
+
+    public void setBook(List<BookModel> books) {
+        this.book = books;
     }
 
     public List<TransactionModel> getTransaction() {

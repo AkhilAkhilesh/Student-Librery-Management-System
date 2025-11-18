@@ -1,6 +1,7 @@
 package com.Management.System.Student.Librery.Management.System.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -29,7 +30,8 @@ public class StudentModel {
     @Column(name="Address",nullable = false)
     private String address;
 
-    @OneToOne
+    @JsonManagedReference
+    @OneToOne(mappedBy = "stu", cascade = CascadeType.ALL)
     private CardModel card;
 
 
